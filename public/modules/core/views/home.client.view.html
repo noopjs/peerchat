@@ -2,10 +2,10 @@
 	<div>
 		<h2>Application Status: {{status}}</h2>
 		<form>
-		<input label="Name" ng-model="name" />
+		<input label="Name" ng-model="name" ng-change="changeName()" />
 		<input label="Text" ng-model="text" ng-change="textChange" ng-submit="nextCmd" />
 		<button ng-repeat="peer in peers" class="btn btn-md" ng-class="{'btn-primary': !peer.selected, 'btn-danger': peer.selected}"
 			ng-click="selectPeer(peer)">{{peer.name}}</button>
-		
+
 	</div>
 </section>

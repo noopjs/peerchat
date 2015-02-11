@@ -5,15 +5,22 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 	function($scope, Authentication, Peer) {
 		// This provides Authentication context.
 		$scope.authentication = Authentication;
-		$scope.status = "Connecting...";
-		$scope.name = "Name";
+		$scope.status = Peer.status;
+		Peer.notify().then(function (){}, function (){}, 
+			function (status) {
+				$scope.status = status;
+			}
+		);
+		$scope.name = Peer.name;
+		$scope.changeName = function () { // FIXME need to throttle
+			Peer.setName($scope.name);
+		};
 		$scope.text = "Text";
-		$scope.peers = [
-			{name: 'a', selected: true}, 
-			{name: 'a', selected: false}, 
-			{name: 'a', selected: false}, 
-		];
-		$scope.curPeer = $scope.peers[0];
+		$scope.peers = Peer.peers;
+		if ($scope.peers.length) {
+			$scope.curPeer = $scope.peers[0];
+			$scope.curPeer.selected = true;
+		}
 		$scope.selectPeer = function (peer) {
 			$scope.curPeer.selected = false;
 			$scope.curPeer = peer;

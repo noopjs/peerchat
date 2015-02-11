@@ -47,6 +47,7 @@ module.exports = {
 				'public/lib/bootstrap/dist/css/bootstrap-theme.css',
 			],
 			js: [
+				'public/lib/lodash/lodash.js',
 				'public/lib/peerjs/peer.js',
 				'public/lib/angular/angular.js',
 				'public/lib/angular-resource/angular-resource.js',

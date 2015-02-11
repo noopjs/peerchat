@@ -20,11 +20,12 @@ module.exports = {
 	assets: {
 		lib: {
 			css: [
-				'public/lib/peerjs/peer.min.js',
 				'public/lib/bootstrap/dist/css/bootstrap.min.css',
 				'public/lib/bootstrap/dist/css/bootstrap-theme.min.css',
 			],
 			js: [
+				'public/lib/lodash/lodash.js',
+				'public/lib/peerjs/peer.min.js',
 				'public/lib/angular/angular.min.js',
 				'public/lib/angular-resource/angular-resource.min.js',
 				'public/lib/angular-animate/angular-animate.min.js',

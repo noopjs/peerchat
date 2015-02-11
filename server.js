@@ -33,8 +33,37 @@ var app = require('./config/express')(db);
 require('./config/passport')();
 
 // Start the app by listening on <port>
-var server = app.listen(config.port);
-//app.use('/peerjs', peerserver(server, {debug: true}));
+//var server = app.listen(config.port);
+var server = require('http').createServer(app);
+var pserver = peerserver(server, {debug: true, port: config.port});
+    app.use('/peerjs', pserver);
+    pserver.on('connection', function (id) { console.log("connect", id)});
+    pserver.on('disconnect', function (id) { console.log("disconnect", id)});
+	//app.get('/peerjs', function () { console.log("here")});
+	// Assume 'not found' in the error msgs is a 404. this is somewhat silly, but valid, you can do whatever you like, set properties, use instanceof etc.
+	app.use(function(err, req, res, next) {
+		// If the error object doesn't exists
+		if (!err) return next();
+
+		// Log it
+		console.error(err.stack);
+
+		// Error page
+		res.status(500).render('500', {
+			error: err.stack
+		});
+	});
+
+	// Assume 404 since no middleware responded
+	app.use(function(req, res) {
+		res.status(404).render('404', {
+			url: req.originalUrl,
+			error: 'Not Found'
+		});
+	});
+
+server.listen(config.port);
+//server.listen(9000);
 // Expose app
 exports = module.exports = app;
 

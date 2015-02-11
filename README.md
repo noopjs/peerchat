@@ -1,21 +1,18 @@
-[![MEAN.JS Logo](http://meanjs.org/img/logo-small.png)](http://meanjs.org/)
+# peerchat: Example Application for Exploring PeerJS, built with the [MEAN](http://meanjs.org/) Stack
 
-[![Build Status](https://travis-ci.org/meanjs/mean.svg?branch=master)](https://travis-ci.org/meanjs/mean)
-[![Dependencies Status](https://david-dm.org/meanjs/mean.svg)](https://david-dm.org/meanjs/mean)
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/meanjs/mean?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-MEAN.JS is a full-stack JavaScript open-source solution, which provides a solid starting point for [MongoDB](http://www.mongodb.org/), [Node.js](http://www.nodejs.org/), [Express](http://expressjs.com/), and [AngularJS](http://angularjs.org/) based applications. The idea is to solve the common issues with connecting those frameworks, build a robust framework to support daily development needs, and help developers use better practices while working with popular JavaScript components.
 
 ## Before You Begin
-Before you begin we recommend you read about the basic building blocks that assemble a MEAN.JS application:
-* MongoDB - Go through [MongoDB Official Website](http://mongodb.org/) and proceed to their [Official Manual](http://docs.mongodb.org/manual/), which should help you understand NoSQL and MongoDB better.
+Before you begin we recommend you read about the basic building blocks that power this application:
+* Node.js - Start by going through [Node.js Official Website](http://nodejs.org/) and this [StackOverflow Thread](http://stackoverflow.com/questions/2353818/how-do-i-get-started-with-node-js), which should get you going with the Node.js platform in no time.
 * Express - The best way to understand express is through its [Official Website](http://expressjs.com/), which has a [Getting Started](http://expressjs.com/starter/installing.html) guide, as well as an [ExpressJS Guide](http://expressjs.com/guide/error-handling.html) guide for general express topics. You can also go through this [StackOverflow Thread](http://stackoverflow.com/questions/8144214/learning-express-for-node-js) for more resources.
 * AngularJS - Angular's [Official Website](http://angularjs.org/) is a great starting point. You can also use [Thinkster Popular Guide](http://www.thinkster.io/), and the [Egghead Videos](https://egghead.io/).
-* Node.js - Start by going through [Node.js Official Website](http://nodejs.org/) and this [StackOverflow Thread](http://stackoverflow.com/questions/2353818/how-do-i-get-started-with-node-js), which should get you going with the Node.js platform in no time.
+* PeerJS - See the Getting Started guide at the [Official Website](http://peerjs.com/)
+* MongoDB - Go through [MongoDB Official Website](http://mongodb.org/) and proceed to their [Official Manual](http://docs.mongodb.org/manual/), which should help you understand NoSQL and MongoDB better.
 
 
 ## Prerequisites
 Make sure you have installed all of the following prerequisites on your development machine:
+* MinGW - [Download and Install](http://www.mingw.org/download/installer) MinGW if you are on a Windows machine.  Make sure to include the MSYS shell and GIT as part of your install
 * Node.js - [Download & Install Node.js](http://www.nodejs.org/download/) and the npm package manager. If you encounter any problems, you can also use this [GitHub Gist](https://gist.github.com/isaacs/579814) to install Node.js.
 * MongoDB - [Download & Install MongoDB](http://www.mongodb.org/downloads), and make sure it's running on the default port (27017).
 * Bower - You're going to use the [Bower Package Manager](http://bower.io/) to manage your front-end packages. Make sure you've installed Node.js and npm first, then install bower globally using npm:
@@ -29,54 +26,46 @@ $ npm install -g bower
 ```bash
 $ npm install -g grunt-cli
 ```
+* Heroku Toolbelt - You need this to deploy the server to the Heroku cloud. [Download and Install](https://toolbelt.heroku.com/).  Make sure to create an account on [heroku.com](https://www.heroku.com/) using your gmail ID as the login.  
 
-## Downloading MEAN.JS
-There are several ways you can get the MEAN.JS boilerplate:
+## Clone the Repository
 
-### Yo Generator
-The recommended way would be to use the [Official Yo Generator](http://meanjs.org/generator.html), which generates the latest stable copy of the MEAN.JS boilerplate and supplies multiple sub-generators to ease your daily development cycles.
-
-### Cloning The GitHub Repository
-You can also use Git to directly clone the MEAN.JS repository:
-```bash
-$ git clone https://github.com/meanjs/mean.git meanjs
 ```
-This will clone the latest version of the MEAN.JS repository to a **meanjs** folder.
-
-### Downloading The Repository Zip File
-Another way to use the MEAN.JS boilerplate is to download a zip copy from the [master branch on GitHub](https://github.com/meanjs/mean/archive/master.zip). You can also do this using `wget` command:
-```bash
-$ wget https://github.com/meanjs/mean/archive/master.zip -O meanjs.zip; unzip meanjs.zip; rm meanjs.zip
+$ git clone https://github.com/noopjs/peerchat.git
 ```
-Don't forget to rename **mean-master** after your project name.
 
-## Quick Install
-Once you've downloaded the boilerplate and installed all the prerequisites, you're just a few steps away from starting to develop your MEAN application.
+## Install
 
-The first thing you should do is install the Node.js dependencies. The boilerplate comes pre-bundled with a package.json file that contains the list of modules you need to start your application. To learn more about the modules installed visit the NPM & Package.json section.
+The first thing you should do is install the Node.js dependencies. The package.json file at the root of the repository contains the list of modules you need to start your application.  To install these dependencies, do:
 
-To install Node.js dependencies you're going to use npm again. In the application folder run this in the command-line:
-
-```bash
+```
 $ npm install
 ```
 
 This command does a few things:
 * First it will install the dependencies needed for the application to run.
 * If you're running in a development environment, it will then also install development dependencies needed for testing and running your application.
-* Finally, when the install process is over, npm will initiate a bower install command to install all the front-end modules needed for the application.
+* Finally, when the install process is over, npm will initiate a bower install command to install all the front-end modules needed for the application
+
+## Start the Development Database Server
+
+In the production environment, the database server runs as a MongoHQ "add on" to the BusCam Heroku cloud application. It is both unnecesary and impractical to connect to this db server during development. Create an empty directory somewhere in your filesystem (in your downloads/ or junk/ folder; don't do this under the peerchat/ folder) and run `mongod` to start the MongoDB daemon:
+
+```
+$ mkdir /path/to/db_dir
+$ "/c/Program Files/MongoDB 2.6 Standard/bin/mongod.exe" --dbpath /path/to/db_dir
+```
 
 ## Running Your Application
-After the install process is over, you'll be able to run your application using Grunt. Just run grunt default task:
+After the install process is over, you'll be able to run your application using Grunt, just run grunt default task:
 
-```bash
+```
 $ grunt
 ```
 
-Your application should run on port 3000, so in your browser just go to [http://localhost:3000](http://localhost:3000)
+Your application should run on the 3001 port so in your browser just go to [http://localhost:3001](http://localhost:3001)
 
-That's it! Your application should be running. To proceed with your development, check the other sections in this documentation.
-If you encounter any problems, try the Troubleshooting section.
+That's it! your application should be running by now.
 
 ## Testing Your Application
 You can run the full test suite included with MEAN.JS with the test task:
@@ -99,53 +88,29 @@ And to run only the client tests, run the test:client task:
 $ grunt test:client
 ```
 
-## Development and deployment With Docker
+## Deploy to Heroku
 
-* Install [Docker](http://www.docker.com/)
-* Install [Fig](https://github.com/orchardup/fig)
+If you have have been aded as a collaborator, you should have received a welcome email from Heroku. Install the toolbelt and login:
 
-* Local development and testing with fig:
-```bash
-$ fig up
+```
+$ heroku login
+```
+Next, add the heroku remote:
+
+```
+$ heroku git:remote git@heroku.com:monkeychat.git
 ```
 
-* Local development and testing with just Docker:
-```bash
-$ docker build -t mean .
-$ docker run -p 27017:27017 -d --name db mongo
-$ docker run -p 3000:3000 --link db:db_1 mean
-$
+To go live, first run the grunt "build" task. This concatenates and minifies your code to "public/dist/application.min.js".  Now commit your code as usual and push to the Heroku remote:
+
+```
+$ grunt build
+$ git commit -m "Preparing to deploy" -a
+$ git push heroku master
 ```
 
-* To enable live reload, forward port 35729 and mount /app and /public as volumes:
-```bash
-$ docker run -p 3000:3000 -p 35729:35729 -v /Users/mdl/workspace/mean-stack/mean/public:/home/mean/public -v /Users/mdl/workspace/mean-stack/mean/app:/home/mean/app --link db:db_1 mean
-```
+The heroku remote is only for continuous integration and deployment. **Do not clone and modify.**
 
-## Running in a secure environment
-To run your application in a secure manner you'll need to use OpenSSL and generate a set of self-signed certificates. Unix-based users can use the following command:
-```bash
-$ sh ./scripts/generate-ssl-certs.sh
-```
-Windows users can follow instructions found [here](http://www.websense.com/support/article/kbarticle/How-to-use-OpenSSL-and-Microsoft-Certification-Authority).
-After you've generated the key and certificate, place them in the *config/sslcerts* folder.
-
-## Getting Started With MEAN.JS
-You have your application running, but there is a lot of stuff to understand. We recommend you go over the [Official Documentation](http://meanjs.org/docs.html).
-In the docs we'll try to explain both general concepts of MEAN components and give you some guidelines to help you improve your development process. We tried covering as many aspects as possible, and will keep it updated by your request. You can also help us develop and improve the documentation by checking out the *gh-pages* branch of this repository.
-
-## Community
-* Use the [Official Website](http://meanjs.org) to learn about changes and the roadmap.
-* Join #meanjs on freenode.
-* Discuss it in the new [Google Group](https://groups.google.com/d/forum/meanjs)
-* Ping us on [Twitter](http://twitter.com/meanjsorg) and [Facebook](http://facebook.com/meanjs)
-
-## Live Example
-Browse the live MEAN.JS example on [http://meanjs.herokuapp.com](http://meanjs.herokuapp.com).
-
-## Credits
-Inspired by the great work of [Madhusudhan Srinivasa](https://github.com/madhums/)
-The MEAN name was coined by [Valeri Karpov](http://blog.mongodb.org/post/49262866911/the-mean-stack-mongodb-expressjs-angularjs-and)
 
 ## License
 (The MIT License)

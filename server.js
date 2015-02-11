@@ -5,7 +5,8 @@
 var init = require('./config/init')(),
 	config = require('./config/config'),
 	mongoose = require('mongoose'),
-	chalk = require('chalk');
+	chalk = require('chalk'),
+	peerserver = require('peer').ExpressPeerServer;
 
 /**
  * Main application entry file.
@@ -32,8 +33,8 @@ var app = require('./config/express')(db);
 require('./config/passport')();
 
 // Start the app by listening on <port>
-app.listen(config.port);
-
+var server = app.listen(config.port);
+//app.use('/peerjs', peerserver(server, {debug: true}));
 // Expose app
 exports = module.exports = app;
 

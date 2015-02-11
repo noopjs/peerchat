@@ -8,7 +8,8 @@ module.exports = function(grunt) {
 		clientViews: ['public/modules/**/views/**/*.html'],
 		clientJS: ['public/js/*.js', 'public/modules/**/*.js'],
 		clientCSS: ['public/modules/**/*.css'],
-		mochaTests: ['app/tests/**/*.js']
+		mochaTests: ['app/tests/**/*.js'],
+		livereload: 35730,
 	};
 
 	// Project Configuration
@@ -18,34 +19,34 @@ module.exports = function(grunt) {
 			serverViews: {
 				files: watchFiles.serverViews,
 				options: {
-					livereload: true
+					livereload: watchFiles.livereload
 				}
 			},
 			serverJS: {
 				files: watchFiles.serverJS,
 				tasks: ['jshint'],
 				options: {
-					livereload: true
+					livereload: watchFiles.livereload
 				}
 			},
 			clientViews: {
 				files: watchFiles.clientViews,
 				options: {
-					livereload: true
+					livereload: watchFiles.livereload
 				}
 			},
 			clientJS: {
 				files: watchFiles.clientJS,
 				tasks: ['jshint'],
 				options: {
-					livereload: true
+					livereload: watchFiles.livereload
 				}
 			},
 			clientCSS: {
 				files: watchFiles.clientCSS,
 				tasks: ['csslint'],
 				options: {
-					livereload: true
+					livereload: watchFiles.livereload
 				}
 			},
 			mochaTests: {

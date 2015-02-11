@@ -1,4 +1,6 @@
-# peerchat: Example Application for Exploring PeerJS, built with the [MEAN](http://meanjs.org/) Stack
+# peerchat
+
+### Example Application for Exploring PeerJS, built with the [MEAN](http://meanjs.org/) Stack
 
 
 ## Before You Begin
@@ -49,7 +51,7 @@ This command does a few things:
 
 ## Start the Development Database Server
 
-In the production environment, the database server runs as a MongoHQ "add on" to the BusCam Heroku cloud application. It is both unnecesary and impractical to connect to this db server during development. Create an empty directory somewhere in your filesystem (in your downloads/ or junk/ folder; don't do this under the peerchat/ folder) and run `mongod` to start the MongoDB daemon:
+In the production environment, the database server runs as a MongoHQ "add on" to the Heroku cloud application. It is both unnecesary and impractical to connect to this db server during development. Create an empty directory somewhere in your filesystem (in your downloads/ or junk/ folder; don't do this under the peerchat/ folder) and run `mongod` to start the MongoDB daemon:
 
 ```
 $ mkdir /path/to/db_dir

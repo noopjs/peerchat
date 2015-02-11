@@ -2,11 +2,11 @@
 
 module.exports = {
 	app: {
-		title: 'MEAN.JS',
-		description: 'Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js',
-		keywords: 'mongodb, express, angularjs, node.js, mongoose, passport'
+		title: 'PeerChat',
+		description: 'Platform for WebRTC Experiments',
+		keywords: 'mongodb, express, angularjs, node.js, mongoose, passport, peerjs, webrtc, websockets'
 	},
-	port: process.env.PORT || 3000,
+	port: process.env.PORT || 3001,
 	templateEngine: 'swig',
 	// The secret should be set to a non-guessable string that
 	// is used to compute a session hash

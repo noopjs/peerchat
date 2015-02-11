@@ -99,7 +99,7 @@ module.exports = function(grunt) {
 		'node-inspector': {
 			custom: {
 				options: {
-					'web-port': 1337,
+					'web-port': 1338,
 					'web-host': 'localhost',
 					'debug-port': 5858,
 					'save-live-edit': true,

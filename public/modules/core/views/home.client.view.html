@@ -24,7 +24,7 @@
                 <div ng-hide="peers.length" class="form-group">
                     <label class="col-md-4 control-label" for="button1id">No Peers Found</label>
                     <div class="col-md-8">
-                    	<p>No valid connections at this moment.</p>
+                    	<p>No valid connections at this moment. <button class="btn btn-sm btn-primary" ng-click="refresh()">Refresh</button></p>
                     </div>
                 </div>
 
@@ -36,9 +36,12 @@
                         <span class="help-block">Hit Enter when you are finished</span>
                     </div>
                 </div>
-
             </fieldset>
         </form>
-
+        <table ng-show="curPeerNdx >= 0 && peers[curPeerNdx].selected && peers[curPeerNdx].messages.length" class="table table-ordered table-striped">
+        	<tr ng-repeat="msg in peers[curPeerNdx].messages">
+        		<td ng-class="{'pull-right':msg.send, 'pull-left':!msg.send}">{{msg.text}}</td>
+        	</tr>
+        </table>
     </div>
 </section>

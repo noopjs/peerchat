@@ -1,11 +1,44 @@
 <section data-ng-controller="HomeController">
-	<div>
-		<h2>Application Status: {{status}}</h2>
-		<form>
-		<input label="Name" ng-model="name" ng-change="changeName()" />
-		<input label="Text" ng-model="text" ng-change="textChange" ng-submit="nextCmd" />
-		<button ng-repeat="peer in peers" class="btn btn-md" ng-class="{'btn-primary': !peer.selected, 'btn-danger': peer.selected}"
-			ng-click="selectPeer(peer)">{{peer.name}}</button>
+    <div>
+        <h2></h2>
+        <form class="form-horizontal">
+            <fieldset>
+                <legend>Application Status: <span ng-style="{'color': (status !== 'connected')?'red':'green'}">{{status}}</span></legend>
 
-	</div>
+                <!-- Name-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="Name">Name</label>
+                    <div class="col-md-4">
+                        <input id="Name" name="Name" type="text" placeholder="Identifier for this connection" class="form-control input-md" ng-model="name" ng-change="changeName()">
+
+                    </div>
+                </div>
+
+                <!-- Choose Peer -->
+                <div ng-show="peers.length" class="form-group">
+                    <label class="col-md-4 control-label" for="button1id">Select Peer</label>
+                    <div class="col-md-8">
+                        <button ng-repeat="peer in peers" class="btn btn-md" ng-class="{'btn-primary': !peer.selected, 'btn-danger': peer.selected}" ng-click="selectPeer(peer)">{{peer.name}}</button>
+                    </div>
+                </div>
+                <div ng-hide="peers.length" class="form-group">
+                    <label class="col-md-4 control-label" for="button1id">No Peers Found</label>
+                    <div class="col-md-8">
+                    	<p>No valid connections at this moment.</p>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div ng-show="curPeerNdx >= 0 && peers[curPeerNdx].selected" class="form-group">
+                    <label class="col-md-4 control-label" for="Message">Message</label>
+                    <div class="col-md-8">
+                        <input id="Message" name="Message" type="text" placeholder="" class="form-control input-md" ng-model="text" ng-change="textChange()" ng-submit="nextCmd()">
+                        <span class="help-block">Hit Enter when you are finished</span>
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
+
+    </div>
 </section>

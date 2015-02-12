@@ -67,7 +67,7 @@ $ grunt
 
 Your application should run on the 3001 port so in your browser just go to [http://localhost:3001](http://localhost:3001)
 
-That's it! your application should be running by now.
+That's it! your application should be running by now........
 
 ## Testing Your Application
 You can run the full test suite included with MEAN.JS with the test task:

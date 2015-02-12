@@ -5,9 +5,10 @@ angular.module('core').service('Peer', [
     '$timeout', '$http', '$q',
     function($timeout, $http, $q) {
         var that = this;
-        that.name = 'Default';
+        that.name = '';
         that.retry = 1000;
         that.keepAlive = 3*60*1000;
+        that.autoRefresh = 60*1000;
         that.notifications = $q.defer();
 
         that.peers = [];
@@ -54,6 +55,7 @@ angular.module('core').service('Peer', [
         				p.conn.on('open', function () {
         					console.log('connection opened with ', p);
         					that.peers.push(p);
+        					p.conn.send(that.connection);
         				});
         				p.conn.on('data', function (d) {
         					p.notifications.notify(d);
@@ -69,7 +71,7 @@ angular.module('core').service('Peer', [
         					// FIXME handle this
         				});
         			});
-        			$timeout(trackPeers, that.retry);
+        			$timeout(trackPeers, that.autoRefresh);
         		});
         }
         function connect() {
@@ -88,6 +90,8 @@ angular.module('core').service('Peer', [
                     })
                     .then(function(resp) {
                         that.connection = resp.data;
+                        that.name = that.connection.name;
+                        status(that.status, that.name);
                         $timeout(kick, that.keepAlive);
                         $timeout(trackPeers, that.retry);
                     }, function(err) {
@@ -106,8 +110,28 @@ angular.module('core').service('Peer', [
                 }, that.retry);
             });
             that.peer.on('error', function(err) {
-                status('error', err);
+                //status('error', err);
+                console.log('Error', err);
                 // FIXME: handle this
+            });
+            that.peer.on('connection', function (conn) {
+            	var start = true, peer;
+            	conn.on('data', function (m) {
+            		if (start) {
+            			var ndx = _.findIndex(that.peers, {_id: m._id});
+            			if (ndx >= 0) {
+            				conn.close();
+            				return;
+            			}
+            			start = false;
+            			peer = m;
+            			peer.notifications = $q.defer();
+            			peer.notify = function () { return peer.notifications.promise};
+            			peer.conn = conn;
+            			that.peers.push(peer);
+            		} else
+            			peer.notifications.notify(m);
+            	});
             });
         }
         connect();

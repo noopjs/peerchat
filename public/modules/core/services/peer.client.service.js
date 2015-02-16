@@ -60,10 +60,10 @@ angular.module('core').service('Peer', [
                     var connections = resp.data;
                     that.peers
                         .filter(function(p) {
-                            return p._id !== that.connection._id;
+                            return p._id !== that.connection._id; // Eliminate my own entry
                         })
                         .map(function(p) {
-                            return _.findIndex(connections, {
+                            return _.findIndex(that.peers, {  // Eliminate peers that I'm already connected to
                                 _id: p._id
                             });
                         })

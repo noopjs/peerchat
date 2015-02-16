@@ -1,0 +1,126 @@
+Feb 16
+-------
+
+- Walk through peer.client.service.js
+   - 
+                localhost:3001 [{name: peer1, pid: <peerjsid>, ip: <ip>}, {name: peer2, pid: <peerjsid>, ip:<ip>}, ]
+                       |
+           |-------------------------------|
+        GET /connections			GET /connections
+        peers[]							peers[]
+
+filter function: [1, 2, 3, 4, 5].filter(function (a) {
+									if (a > 3)
+										return true;
+								});
+			==> [4, 5]
+map function: [1, 2, 3, 4, 5].map(function (a) {
+									return a+2;
+								})
+			===> [3, 4, 5, ...]
+reverse function : []
+
+Chaining:
+ var arr1 = arr.filter(<>);
+ var arr2 = arr1.map(<>);
+ var arr3 = arr2.reverse();
+ arr.filter(<>).map().reverse();
+
+findIndex: (underscore.js/lodash.js -- utility toolbelt)
+	_.findIndex([1, 2,3, 4, 5], funciton (a) { 
+		return (a == 3)
+	}) ==> 2
+	_.findIndex([1, 2,3, 4, 5], 3); ===> 2
+	_.findIndex([{a:1, b:2}, {a:3, b:4}, {a:5, b:6}], {a: 5})
+
+
+---> Learn to use tools like jsfiddle and plunkr (Google it up today)
+
+----------------
+Tasks for this week:
+1. Change the server to share only within the Network
+   -- Back-end (server sode code)
+   -- Filter peer list by external IP
+
+   Peer1 (Soliton)		--->| Firewall/Proxy |---> (IP address)  --> http://monkeychat.herokuapp.com
+   Peer 2 (Soliton)         |                |
+
+2. Add capability for file transfer
+    - Front-end
+    - File upload 
+    -- Benchmarking 
+---------
+Promises (in Javascript)
+---------
+
+1. How to do asynchronous code
+     http('a.com', function (err, resp_a) {
+     	if (err)
+     		//
+     	http('b.com', func tion (err, resp_b) {
+     		http('c.com', function (resp_c) {
+     			///  Pyramid of doom
+
+     		})
+     	})
+     });
+2. Promise based approach
+	$http('a.com').then(function (resp_a) {
+		return $http('b.com');
+	})
+	.then(function (resp_b) {
+		return $http('c.com');
+	})
+	.then(function (resp_c) {
+		// business logic
+	}, function (err) {
+		// handle error
+	})
+
+	Promise Creator												Promise COnsumer
+	--------------												-----------------
+	deferred = $q.defer();	
+	return dereffed.promise 					===>			retaines promise
+	deferred.notify()							===>            promise.progress(fuinction () { })
+	deferred.resolve()							===>			promise.then(function () {})
+	deferred.reject()							===>			promise.catch(function () {})
+
+REST API
+--------
+GET /connections --> list of connections
+POST /connections {pid:'', name:''} --> create a new connection
+PUT /connections/<connectionID>  --> renew a connection
+DELETE /connections/<connectionID> --> remove the connection entry
+
+PeerJS API
+-----------
+Peer initiates -->
+Peer received incoming <---  'connection' event on the PeerJS connection object
+
+
+Peer --> connections to PeerServer
+	--> COnnection object is an event emitter
+cobj = new Peer()
+
+cobj.on('<eventName>', callback);
+pcobj = cobj.connect(peerId);
+
+
+pcobj = cobj.connect('peerId')
+cobj.on('connection', function (pcobj) {
+	// Use pcobj
+	pcobj
+})
+
+					[PeerJS Server]
+   -------------------|-------------------|  <--- cobj (event emitter; important event is 'connection' for a new incoming connection)
+   |                  |                   |
+[Peer1]	<-------->  [Peer2]				[Peer3]
+          pcobj (event emitter; important event is 'data' which means new incoming data)
+
+cobj.connect('peer')
+pcobj.send({})
+
+
+peer-server  (broker) -- currently using peerjs.io;
+peerjs client (which is used in front end)

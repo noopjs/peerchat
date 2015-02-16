@@ -89,7 +89,7 @@ angular.module('core').service('Peer', [
             status('connecting');
             //that.peer = new Peer('123456', {host: location.host.split(':')[0], port: location.host.split(':')[1]});
             that.peer = new Peer({
-                key: '8yxqk2u1vz0yhkt9'
+                key: '8yxqk2u1vz0yhkt9' // per application
             });
             that.peer.on('open', function(id) {
                 status('connected', id);

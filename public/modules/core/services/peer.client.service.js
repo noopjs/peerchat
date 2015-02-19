@@ -15,7 +15,7 @@ angular.module('core').service('Peer', [
 
         function status(what, params) {
             that.status = what;
-            console.log('Peer Status: ' + what,params);
+            console.log('Peer Status: ' + what, params);
             that.notifications.notify(what);
         }
 
@@ -48,7 +48,6 @@ angular.module('core').service('Peer', [
             });
             p.conn.on('error', function(err) {
                 console.log('peer error', err);
-                $http.delete('/connections/'+that.connection._id,{id:p.pid});
                 // FIXME handle this
             });
         }
@@ -79,7 +78,6 @@ angular.module('core').service('Peer', [
                         p.conn.on('open', function() {
                             console.log('connection opened with ', p);
                             that.peers.push(p);
-                            console.log(that.connection.name);
                             p.conn.send(that.connection);
                         });
                     });
@@ -124,8 +122,7 @@ angular.module('core').service('Peer', [
             });
             that.peer.on('error', function(err) {
                 //status('error', err);
-                $http.delete('/connections/'+that.connection._id,{pid:that.id}).then(function(res){console.log(res);});
-                //console.log('Error', err);
+                console.log('Error', err);
                 // FIXME: handle this
             });
             that.peer.on('connection', function(conn) {

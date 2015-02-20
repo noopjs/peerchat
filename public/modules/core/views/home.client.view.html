@@ -18,8 +18,17 @@
                 <div ng-show="peers.length" class="form-group">
                     <label class="col-md-4 control-label" for="button1id">Select Peer</label>
                     <div class="col-md-8">
+<<<<<<< HEAD
+                        <button ng-repeat="peer in peers" class="btn btn-md" ng-class="{'btn-primary': !peer.selected, 'btn-danger': peer.selected}" ng-click="selectPeer(peer)">{{peer.name}}</button>                        
+                    </div>
+                    <label class="col-md-4 control-label" for="button1id">Refresh Peer List: </label>
+                    <div class="col-md-8">
+                        <button class="btn btn-md btn-primary" ng-click="refresh()">Refresh</button>
+                    </div>                    
+=======
                         <button ng-repeat="peer in peers" class="btn btn-md" ng-class="{'btn-primary': !peer.selected, 'btn-danger': peer.selected}" ng-click="selectPeer(peer)">{{peer.name}}</button>
                     </div>
+>>>>>>> c319451bee081bf9ac8611e2aaed57361b607636
                 </div>
                 <div ng-hide="peers.length" class="form-group">
                     <label class="col-md-4 control-label" for="button1id">No Peers Found</label>
@@ -28,6 +37,19 @@
                     </div>
                 </div>
 
+<<<<<<< HEAD
+                <!-- File Input    -->
+                <div ng-show="curPeerNdx >= 0 && peers[curPeerNdx].selected" class="form-group">
+                    <label class="col-md-4 control-label">File Upload</label>
+                    <div class="col-md-8">
+                        <form name="fileForm" ng-controller="FileController" ng-submit="FileController.upload()">
+                            <input type="file" class="form-control input-md">
+                            <input class="btn btn-md btn-primary" type="submit" ng-model="FileController.file">
+                        </form>
+                    </div>
+                </div>
+=======
+>>>>>>> c319451bee081bf9ac8611e2aaed57361b607636
                 <!-- Text input-->
                 <div ng-show="curPeerNdx >= 0 && peers[curPeerNdx].selected" class="form-group">
                     <label class="col-md-4 control-label" for="Message">Message</label>

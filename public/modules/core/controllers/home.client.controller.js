@@ -61,4 +61,9 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 		};
 		$scope.refresh = Peer.refresh;
 	}
+<<<<<<< HEAD
 ]);
+
+=======
+]);
+>>>>>>> c319451bee081bf9ac8611e2aaed57361b607636

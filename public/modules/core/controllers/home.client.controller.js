@@ -43,6 +43,7 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 		if ($scope.peers.length)
 			$scope.selectPeer($scope.peers[0]);
 		var msg;
+        
 		$scope.textChange = function () {
 			if ($scope.curPeerNdx < 0 || !$scope.peers[$scope.curPeerNdx].selected)
 				return;
@@ -54,11 +55,39 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 			msg.text = $scope.text;
 			peer.send(msg);
 		};
+        
+        $scope.send=function(){
+            var peer = $scope.peers[$scope.curPeerNdx];
+            if($scope.myfile){
+            console.log($scope.myfile);
+            peer.send($scope.myfile);
+            }
+            else
+            alert("Load File");
+            };
+        
+        
 		$scope.nextCmd = function () {
 			$scope.textChange();
 			$scope.text = "";
 			msg = null;
 		};
+        
 		$scope.refresh = Peer.refresh;
 	}
-]);
+]).directive('fileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+            
+            element.bind('change', function(){
+                scope.$apply(function(){
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+        }
+    };
+}]);
+

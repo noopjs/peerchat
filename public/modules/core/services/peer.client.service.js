@@ -36,7 +36,13 @@ angular.module('core').service('Peer', [
                 return p.notifications.promise
             };
             p.conn.on('data', function(d) {
+                console.log(d);
                 p.notifications.notify(d);
+                //var blob= new (d.chunk,{type:d.type});
+                var a = document.getElementById("a");
+                a.href=d.url;
+                a.download=d.fileName;
+                //a.href=window.createObjectURL(blob);
             });
             p.send = function(m) {
                 p.conn.send(m);
@@ -48,7 +54,6 @@ angular.module('core').service('Peer', [
             });
             p.conn.on('error', function(err) {
                 console.log('peer error', err);
-                $http.delete('/connections/'+that.connection._id,{id:p.pid});
                 // FIXME handle this
             });
         }
@@ -64,7 +69,7 @@ angular.module('core').service('Peer', [
                             return p._id !== that.connection._id; // Eliminate my own entry
                         })
                         .map(function(p) {
-                            return _.findIndex(that.peers, {  // Eliminate peers that I'm already connected to
+                            return _.findIndex(connections, {  // Eliminate peers that I'm already connected   
                                 _id: p._id
                             });
                         })
@@ -89,7 +94,7 @@ angular.module('core').service('Peer', [
 
         function connect() {
             status('connecting');
-            //that.peer = new Peer('123456', {host: location.host.split(':')[0], port: location.host.split(':')[1]});
+            //that.peer = new Peer('123456', {host: location.host.split(':')[0], port:location.host.split(':')[1]});
             that.peer = new Peer({
                 key: '8yxqk2u1vz0yhkt9' // per application
             });
@@ -124,8 +129,7 @@ angular.module('core').service('Peer', [
             });
             that.peer.on('error', function(err) {
                 //status('error', err);
-                $http.delete('/connections/'+that.connection._id,{pid:that.id}).then(function(res){console.log(res);});
-                //console.log('Error', err);
+                 console.log('Error', err);
                 // FIXME: handle this
             });
             that.peer.on('connection', function(conn) {
@@ -134,7 +138,7 @@ angular.module('core').service('Peer', [
                         _id: m._id
                     });
                     if (ndx >= 0) {
-                        conn.close();
+                     //   conn.close();
                         return;
                     }
                     m.conn = conn;
@@ -144,7 +148,15 @@ angular.module('core').service('Peer', [
             });
         }
         connect();
-        // Public API
+        window.onbeforeunload=function() {
+            if(!that.peer.destroyed){
+                console.log('i am destroying');
+                $http.delete('/connections/'+that.connection._id).then(function(res)                  {console.log(res)});
+                that.peer.destroy;
+                }
+        }
+        
+    // Public API
         that.setName = function(name) {
             that.name = name;
             $http.put('/connections/' + that.connection._id, {

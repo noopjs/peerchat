@@ -39,9 +39,9 @@ angular.module('core').service('Peer', [
                 console.log(d);
                 p.notifications.notify(d);
                 //var blob= new (d.chunk,{type:d.type});
-                var a = document.getElementById("a");
-                a.href=d.url;
-                a.download=d.fileName;
+                var dlink = document.getElementById("a");
+                dlink.href=d.url;
+                dlink.download=d.fileName;
                 //a.href=window.createObjectURL(blob);
             });
             p.send = function(m) {

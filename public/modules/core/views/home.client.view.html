@@ -19,51 +19,46 @@
                     <label class="col-md-4 control-label" for="button1id">Select Peer</label>
                     <div class="col-md-8">
                         <button ng-repeat="peer in peers" class="btn btn-md" ng-class="{'btn-primary': !peer.selected, 'btn-danger': peer.selected}" ng-click="selectPeer(peer)">{{peer.name}}</button>
+                        <button class="btn btn-md btn-info" ng-click="refresh()">Refresh</button>
                     </div>
-                    <label class="col-md-4 control-label" for="button1id">Refresh Peer List: </label>
-                    <div class="col-md-8">
-                        <button class="btn btn-md btn-primary" ng-click="refresh()">Refresh</button>
                     </div>
-                </div>
                 <div ng-hide="peers.length" class="form-group">
                     <label class="col-md-4 control-label" for="button1id">No Peers Found</label>
                     <div class="col-md-8">
                     	<p>No valid connections at this moment. <button class="btn btn-sm btn-primary" ng-click="refresh()">Refresh</button></p>
                     </div>
                 </div>
-                
                 <!-- File Input    -->
                 <div ng-show="curPeerNdx >= 0 && peers[curPeerNdx].selected" class="form-group">
                     <label class="col-md-4 control-label">File Upload</label>
                     <div class="col-md-8">
                         <form name="fileForm" >
-                            <input type="file" class="form-control input-sm" id="file" file-model="myFile"/>
-                            <input class="btn btn-md btn-primary" type="submit" ng-click="upload()"/>
+                            <input type="file" class="form-control input-sm" id="file" file-model="myFile"/><br>
+                            <button class="btn btn-sm btn-primary"  ng-click="upload()">Transfer</button>
                         </form>
                     </div>
                 </div>
-
-                <!-- Text input-->
+            <!-- Text input-->
                 <div ng-show="curPeerNdx >= 0 && peers[curPeerNdx].selected" class="form-group">
                     <label class="col-md-4 control-label" for="Message">Message</label>
                     <div class="col-md-8">
                         <input id="Message" name="Message" type="text" placeholder="" class="form-control input-md" ng-model="text" ng-change="textChange()" ng-submit="nextCmd()">
                         <span class="help-block">Hit Enter when you are finished</span>
+                          <button class="btn btn-sm btn-success"><a id="a" download>Download</a></button>
                     </div>
                 </div>
             </fieldset>
         </form>
         <!-- File -->
         <div ng-show="curPeerNdx >= 0 && peers[curPeerNdx].selected && peers[curPeerNdx].messages.length" class="form-horizontal">
-            <label class="col-md-4 control-label">Download File: </label>            
-            <button class="btn btn-md btn-danger"><a id="a" download>Download</a></button>
+          
         </div>
-               
+           
         <!-- Message Table -->
         <table ng-show="curPeerNdx >= 0 && peers[curPeerNdx].selected && peers[curPeerNdx].messages.length" class="table table-ordered table-striped">
         	<tr ng-repeat="msg in peers[curPeerNdx].messages">
-        		<td ng-class="{'pull-right':msg.send, 'pull-left':!msg.send}">{{msg.text +": "+ msg.fileName}}</td>
-        	</tr>
+        		<td ng-class="{'pull-right':msg.send, 'pull-left':!msg.send}">{{msg.text}}</td>
+                        	</tr>
         </table>
     </div>
 </section>

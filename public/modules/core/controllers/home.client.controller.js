@@ -77,10 +77,10 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 				        peer.messages.push(msg);
                     }
                     //msg.type=$scope.myFile.type;
-                    msg.text = 'You have got a File';
+                     msg.fileName = $scope.myFile.name;
+                    msg.text = 'You have got a File: '+ $scope.myFile.name;
                     msg.url = fileUrl;
                     //msg.chunk = fileUrl;
-                    msg.fileName = $scope.myFile.name;
                     peer.send(msg);
                     alert("File Uploaded!");
                 }

@@ -60,3 +60,10 @@ mongod
 *.swp
 logs/
 build/
+*.ns
+*._0
+path/mongod.lock
+*.0
+public.rar
+path/journal/lsn
+

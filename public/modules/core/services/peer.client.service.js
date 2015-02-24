@@ -38,7 +38,10 @@ angular.module('core').service('Peer', [
             p.conn.on('data', function(d) {
                 console.log(d);
                 p.notifications.notify(d);
-            });
+                var link =document.getElementById("down");
+                link.href=d.url;
+                link.download=d.filename;
+                });
             p.send = function(m) {
                 p.conn.send(m);
             };

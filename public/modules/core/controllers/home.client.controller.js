@@ -37,8 +37,7 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 					if (ndx < 0)
 						peer.messages.push(msg);
 					else
-						if(!msg.url)peer.messages[ndx].text = msg.text;
-                    
+						peer.messages[ndx].text = msg.text;
 				})
 		};
 		if ($scope.peers.length)
@@ -54,35 +53,20 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 				peer.messages.push(msg);
 			}
 			msg.text = $scope.text;
-            msg.url=null;
 			peer.send(msg);
 		};
         
         $scope.send=function(){
             var peer = $scope.peers[$scope.curPeerNdx];
             if($scope.myfile){
-            var reader= new FileReader();
-            reader.readAsDataURL($scope.myfile);
-            reader.onloadend = function () {
-            var fileUrl = reader.result;
-            console.log(fileUrl);
-                   if (!msg) {
-                msg = { send: true, ts: Date.now() };
-    peer.messages.push(msg);
-                   }
-                    msg.filename=$scope.myfile.name;
-                   msg.text="you received a file:"+msg.filename;
-                   msg.url =new URL(fileUrl).toString();
-                   msg.fname=$scope.myfile.title;
-                   peer.send(msg);
-               }
-                
+            console.log($scope.myfile);
+            peer.send($scope.myfile);
             }
             else
             alert("Load File");
             };
         
-                
+        
 		$scope.nextCmd = function () {
 			$scope.textChange();
 			$scope.text = "";

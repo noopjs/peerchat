@@ -32,16 +32,16 @@
                     <div class="col-md-8">
                        <form>
                             <input type="file" class="form-control input-sm"  file-model="myfile"><br>
-                             <input class="btn btn-sm btn-info" value="transfer" type="submit" ng-click="send()">      </form>
+                             <input class="btn btn-sm btn-info" value="transfer" type="submit" ng-click="send()">
+                           </form>
                     </div>
                  </div>
                 <!-- Text input-->
-                        <div ng-show="curPeerNdx >= 0 && peers[curPeerNdx].selected" class="form-group">
+                <div ng-show="curPeerNdx >= 0 && peers[curPeerNdx].selected" class="form-group">
                     <label class="col-md-4 control-label" for="Message">Message</label>
                     <div class= "col-md-8">
                         <input id="Message" name="Message" type="text" placeholder="" class="form-control input-md" ng-model="text" ng-change="textChange()" ng-submit="nextCmd()">
                         <span class="help-block">Hit Enter when you are finished</span>
-                       <button class="btn btn-md btn-success"> <a id="down" download>Download</a></button>
                          </div>
                        </div>
                     </div>
